@@ -1,0 +1,122 @@
+---
+title: "Extensiones al modelo de segregación de Schelling: Impacto del costo de mudanza"
+output: html_document
+---
+<br>
+
+<br>
+
+**keywords:** Modelos basados en agentes - Simulación - Calibración.
+
+**abstract:** En el modelo clásico de Schelling [@schelling1971dynamic], cuando un individuo se siente insatisfecho por la cantidad de “vecinos” no deseados, simplemente se muda a otra locación que esté libre, pero esto tiene la complicación de la densidad de nuestra ciudad. Por otra parte, se supone que en la vida real una mudanza tiene muchos costos asociados. Por esta razón,se propone modificar el modelo considerando que cada agente comienza con una cantidad de unidades monetarias (capital $C$), y que al pasar cada unidad de tiempo cada agente consigue ahorrar una cierta cantidad de unidades monetarias (ahorro $A$), si en un momento se siente insatisfecho y tiene un capital mayor o igual al costo de la mudanza $C_m$, entonces podrá mudarse a alguna de las locaciones libres, en caso contrario no podrá hacerlo, lo que implica que en el siguiente paso puede o no estar insatisfecho, dependiendo de que haya sucedido con sus vecinos.
+
+<br>
+<br>
+
+# Introducción
+
+La segregación ha sido un problema social en varios países y son muchos los factores que han contribuido a ésta, las leyes de zonificación, la discriminación en la vivienda (esto puede incluir negar a ciertas personas la oportunidad de vivir en ciertas áreas o comunidades debido a su raza, origen étnico, religión, género u otras caracterı́sticas) entre otros. Basándose en la segregación en 1971, el economista estadounidense Thomas Schelling desarrolló un modelo (conocido como Schelling Tipping Model) en el que demostraba que incluso sin intención explı́cita de hacerlo, las personas podrían contribuir a la segregación a través de su comportamiento inadvertido. Su modelo de segregación mostraba que incluso cuando a los individuos (o “agentes”) no les importaba estar rodeados o vivir junto a agentes de una raza o trasfondo económico diferente, aún elegirı́an separarse de otros agentes con el tiempo  y quedar agrupados según el tipo de agente, [@Miller2007], [@McCown2013].
+
+
+Los agentes del modelo tienen la posibilidad de moverse de una parcela a otra, y este movimiento está determinado por el nivel de satisfacción de cada agente respecto a la composición de su vecindario en cada período. Los agentes se encuentran satisfechos si la proporción de vecinos de su mismo grupo es igual o superior a determinado umbral de tolerancia definido a priori. Este umbral, constituye el parámetro central del modelo y está asociado a una regla de comportamiento que en este caso determina que los agentes que no se encuentren satisfechos en un período se muevan a una parcela vacía al azar en el período siguiente.
+
+En el modelo clásico, cuando un individuo se siente insatisfecho por la cantidad de “vecinos” no deseados, simplemente se muda a otra locación que esté libre, pero esto tiene la complicación de la densidad de nuestra ciudad. Por otra parte, se supone que en la vida real una mudanza tiene muchos costos asociados. Por esta razón, se propone modificar el modelo considerando que cada agente comienza con una cantidad de unidades monetarias (capital $C$), y que al pasar cada unidad de tiempo cada agente consigue ahorrar una cierta cantidad de unidades monetarias (ahorro $A$), si en un momento se siente insatisfecho y tiene un capital mayor o igual al costo de la mudanza $C_m$, entonces podrá mudarse a alguna de las locaciones libres, en caso contrario no podrá hacerlo, lo que implica que en el siguiente paso puede o no estar insatisfecho, dependiendo de lo que haya sucedido con sus vecinos.
+
+<br>
+<br>
+
+# Objetivos
+Los Objetivos  de este trabajo  son :
+
+-   Wvaluar el impacto en la segregación al manejar diferentes   costos de mudanzas, e incluir  otros parámetros en el modelo original y  que tienen que ver con la densidad de la ciudad y el umbral de tolerancias, [@rgl2022].
+
+-   elaborar una shinny que muestre el modelo de simulación, donde   las y los usuarios puedan tener  diferentes pestañas, donde se puedan ver la evolución de varias métricas asociadas de segregación y  la dinámica de movimiento de los agentes en la ciudad, [@shiny2023]
+
+<br>
+<br>
+
+# Metodología
+
+Se manejan 4 escenarios donde en el  **Escenario 1**,  se asigna igual capital inicial  e iguales ahorros por unidad de tiempo a todos los agentes. En el **Escenario 2**, se genera desigualdad entre los grupos, al asignar a uno de los grupos un mayor capital inicial y mayor asignación por período, es decir capacidad de ahorro. **Escenario 3**, se utilizan los mismos parámetros que el  *Escenario 2* con la diferencia que se va a considerar variable el umbral de tolerancia.  **Escenario 4**, se utilizan los mismos parámetros que el  *Escenario 2* con la diferencia que se va a considerar variable la densidad poblacional.
+
+<br>
+
+**Escenario 1:**
+
+- La cantidad de agentes $N$
+- La cantidad de parcelas $T$
+- Densidad $\Psi =\frac{N}{T}$
+- El porcentaje de agentes sobre el total que pertenecen a uno de los grupos $p$ y $q = 1 - p$ en el grupo restante
+- El umbral de intolerancia $u$ igual en ambos grupos
+- La cantidad de iteraciones $t$
+- Capital $C$ para los agentes de ambos grupos
+- Ahorro $A$ para los agentes de ambos grupos
+- Costo de la mudanza $\upsilon$ = 0
+
+<br>
+
+**Escenario 2:** Desigualdad entre los grupos, al asignar a uno de los grupos un mayor capital inicial y mayor capacidad de ahorro (Capital diferencial, Ahorro  diferencial).
+
+<br>
+
+**Escenario 3** Se utilizan los mismos par\'ametros que el  \textit{Escenario 2} con la diferencia que se va a considerar variable el umbral de tolerancia. Umbral de tolerancia varía desde 0 a 1 ($u$ = 0 a 1) 
+
+<br>
+
+**Escenario 4** Se utilizan los mismos par\'ametros que el  \textit{Escenario 2} con la diferencia que se va a considerar variable la densidad poblacional. Densidad poblacional varía desde 0.45 a 0.95 ($\Psi$ = 0.45 a  0.95)
+
+<br>
+<br>
+
+# Reproducibilidad 
+Para asegurar la reproducibilidad de los resultados del análisis realizado, se dispuso el código y los datos utilizados en un repositorio público al que se puede acceder a través de este link <https://gitlab.com/meda3/extensiones-al-modelo-de-segregacion-de-schelling-inclusion-de-costo-de-mudanza>
+ 
+<br>
+<br>
+
+# Conclusiones
+La primera conclusión general a la que se llega es que los costos de mudanza inciden en
+el modelo, generando una postergación de las mudanzas, con un aumento en el nivel de
+insatisfacción de parte de los agentes, y un rezago en los niveles de segregación. Para
+sociedades con niveles de aceptación medio, no se generan niveles altos de insatisfacción,
+pero si el tiempo se prolonga, se llegarı́a a niveles altos de similitud (o sea niveles altos
+de segregación).
+Para el caso de costo de mudanza diferencial, puede verse que si bien un grupo tiene mayor poder económico que el otro, si el valor de la mudanza se mantiene constante para todos los agentes, se constata que, en definitiva el comportamiento, como sociedad, termina siendo “promedial”, favoreciendo de esta forma a los “menos pudientes”. Esta situación se debe a que para valores moderados de costo de mudanza, al lograr una mayor similitud entre los del grupo 2 (los más ricos), esto repercute en mayor similitud entre muchos del grupo 1.
+
+Al inicio de este trabajo, surgía  la pregunta de cómo sería la nueva dinámica intra y entre grupos, y la respuesta es que las diferencias económicas entre los grupos convergen a un comportamiento medio llegando ligeramente a resultados finales similares.
+
+Surge como futuro trabajo evaluar empı́ricamente el cambio en los parámetro de entrada de los modelos considerando algunas distribuciones de probabilidad apropiadas al aleatorizar algunos de los componentes, como los ingresos, los costos de mudanza, densidad, tolerancia y una eventual retroalimentación  en el sistema entre algunos de los componentes que pudiesen funcionar como incentivos o de pronto que los agentes pueden tener subsidio por ejemplo para el costo de la mudanza .
+
+<br>
+<br>
+
+# Bibliografía
+
+1. Schelling, Thomas C. (1971). *Dynamic models of segregation*. Journal of Mathematical Sociology, Vol. 1, No. 2, pp. 143--186. Publisher: Taylor & Francis.
+
+2. Miller, John and Page, Scott (2007). *Complex Adaptive Systems: An Introduction to Computational Models of Social Life*. ISBN: 9780691127026. [Enlace](https://press.princeton.edu/books/paperback/9780691127026/complex-adaptive-systems)
+
+3. McCown, Frank (May 2023). *Schelling's Model of Segregation*. [Disponible en línea](http://nifty.stanford.edu/2014/mccown-schelling-model-segregation/)
+
+4. Urrutia-Mosquera, J., López-Ospina, H., Sabatini, F., y Rasse, A. (2017). *Tolerancia a la diversidad y segregación residencial. Una adaptación del modelo de segregación de Schelling con tres grupos sociales*. *EURE (Santiago)*, 43, 5-24.
+
+5. Sievert, C. (2020). *Interactive Web-Based Data Visualization with R, plotly and shiny*. Chapman and Hall/CRC Florida.
+
+6. De Armas, G, Rodriguez-Collazo, S, Álvarez-Vaz, R, Carrasco, H y Ciganda, D. (2020). *Extensiones al modelo de segregación de Schelling, primera parte*. Serie Documentos de Trabajo; 2/20. Universidad de la República (Uruguay). Facultad de Ciencias Económicas y de Administración. Instituto de Estadística. [Enlace](https://iesta.fcea.udelar.edu.uy/wp-content/uploads/2020/09/ddt_02_20.pdf)
+
+7. Murdoch, Duncan and Adler, Daniel (2022). *rgl: 3D Visualization Using OpenGL*. R package version 0.109.6. [Enlace](https://CRAN.R-project.org/package=rgl)
+
+8. {R Core Team} (2023). *R: A Language and Environment for Statistical Computing*. [Sitio web](https://www.R-project.org/)
+
+9. Chang, Winston et al. (2023). *shiny: Web Application Framework for R*. R package version 1.7.4.9002. [Sitio web](https://shiny.rstudio.com/)
+
+
+<br>
+<br>
+
+# Agradecimientos
+
+Joaquín Viola  (https://orcid.org/0009-0007-4385-9893) y Mauro Loprete (https://orcid.org/0000-0003-1560-0183)
+
+<br>
+<br>
